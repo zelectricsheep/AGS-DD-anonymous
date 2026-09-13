@@ -1,0 +1,20 @@
+# Run from the extracted package root. This is not a fully locked environment.
+# CUDA wheel constraints prevent an unnoticed change of the reference runtime.
+-c constraints-cu128.txt
+torch==2.7.1
+torchvision==0.22.1
+numpy>=1.24.0
+scipy>=1.10.0
+scikit-learn>=1.2.0
+Pillow>=9.0.0
+tqdm>=4.65.0
+# Required: install the bundled custom implementation, never ordinary PyPI diffusers.
+-e ./diffusers
+transformers>=4.30.0
+pyyaml>=6.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+timm>=0.9.0
+efficientnet_pytorch>=0.7.1
+scikit-image>=0.20.0
+pandas>=2.0.0
