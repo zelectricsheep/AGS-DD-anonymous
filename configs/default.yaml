@@ -1,0 +1,94 @@
+# AGS-DD Default Configuration
+# Adaptive Guidance Scheduling for Training-Free Diffusion Dataset Distillation
+
+# Model
+model: "DiT-XL/2"
+vae: "mse"
+image_size: 256
+num_classes: 1000
+cfg_scale: 4.0
+num_sampling_steps: 50
+
+# Dataset
+dataset:
+  name: "imagenette"
+  ipc: 10
+  nclass: 10
+  num_datasets: 5
+
+# CAGS: Class-Adaptive Guidance Strength
+cags:
+  enabled: true
+  alpha: 0.5
+  beta: 0.5
+  kmin: 2
+  kmax: 20
+  guidance_scale_min: 0.05
+  guidance_scale_max: 0.5
+  use_pca: false
+  max_k_method: "silhouette"
+
+# IAST: IPC-Adaptive Stop Timing
+iast:
+  enabled: true
+  lambda: 0.316
+  min_stop: 5
+  max_stop_ratio: 0.9
+  use_complexity: true
+  complexity_weight: 0.3
+  default_stop_t: 25
+
+# TAGS: Timestep-Adaptive Guidance Scheduling
+tags:
+  enabled: true
+  schedule_type: "cosine"
+  w_max: 0.5
+  w_min: 0.0
+  warmup_steps: 0
+  decay_rate: 3.0
+  guidance_window: "low_noise"
+
+# Evaluation
+evaluation:
+  arch: "convnet7"
+  img_size: 224
+  epochs: 2000
+  batch_size: 128
+  lr: 0.01
+  num_seeds: 5
+  use_mixup: true
+
+# Cross-architecture
+cross_arch:
+  arch_list:
+    - "convnet7"
+    - "resnet18"
+    - "vit_tiny"
+    - "swin_tiny"
+    - "deit_tiny"
+
+# Datasets configs
+datasets:
+  imagenette:
+    nclass: 10
+    resolution: 224
+    class_file: "./misc/class_nette.txt"
+
+  imagewoof:
+    nclass: 10
+    resolution: 224
+    class_file: "./misc/class_woof.txt"
+    cags_alpha: 0.6
+    cags_beta: 0.4
+    guidance_scale_max: 0.6
+
+  imagenet100:
+    nclass: 100
+    resolution: 224
+    class_file: "./misc/class100.txt"
+
+  imagenet1k:
+    nclass: 1000
+    resolution: 224
+    class_file: "./misc/class_indices.txt"
+    nclass_per_phase: 100
